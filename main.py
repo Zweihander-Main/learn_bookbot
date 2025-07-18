@@ -1,4 +1,4 @@
-from stats import get_num_words
+from stats import get_char_data, get_num_words
 
 def get_book_text(file_path: str) -> str:
 	"""
@@ -29,6 +29,10 @@ def main() -> None:
 	if book_text:
 		num_words = get_num_words(book_text)
 		print(f"{num_words} words found in the document")
+		char_data: dict[str, int]	 = get_char_data(book_text)
+		print("Character statistics:")
+		for char, count in sorted(char_data.items()):
+			print(f"'{char}': {count}")
 	else:
 		print("The book is empty or could not be read.")
 
