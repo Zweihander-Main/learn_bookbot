@@ -1,4 +1,5 @@
-from stats import get_char_data, get_num_words
+from custom_types import CharDataSortedList
+from stats import get_char_data, get_num_words, get_sorted_char_data
 
 def get_book_text(file_path: str) -> str:
 	"""
@@ -17,24 +18,37 @@ def main() -> None:
 	"""
 	Main function to execute the book reading functionality.
 	"""
-	relative_path = './books/frankenstein.txt'
+	relative_path = 'books/frankenstein.txt'
 	book_text = ""
+
+	print("============ BOOKBOT ============")
+	print(f"Analyzing book found at {relative_path}...")
+
 	try:
 		book_text = get_book_text(relative_path)
 	except FileNotFoundError:
 		print(f"Error: The file '{relative_path}' was not found.")
+		return
 	except Exception as e:
 		print(f"An error occurred: {e}")
+		return
 
-	if book_text:
-		num_words = get_num_words(book_text)
-		print(f"{num_words} words found in the document")
-		char_data: dict[str, int]	 = get_char_data(book_text)
-		print("Character statistics:")
-		for char, count in sorted(char_data.items()):
-			print(f"'{char}': {count}")
-	else:
+	if not book_text:
 		print("The book is empty or could not be read.")
+		return
+
+	print("----------- Word Count ----------")
+	num_words = get_num_words(book_text)
+	print(f"Found {num_words} total words")
+
+	print("--------- Character Count -------")
+	char_data: dict[str, int]	 = get_char_data(book_text)
+	char_data_sorted: CharDataSortedList = get_sorted_char_data(char_data)
+	for char_dict in char_data_sorted:
+		print(f"{char_dict['char']}: {char_dict['num']}")
+
+	print("============= END ===============")
+
 
 if __name__ == "__main__":
 	main()
