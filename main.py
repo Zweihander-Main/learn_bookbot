@@ -1,3 +1,5 @@
+from stats import get_num_words
+
 def get_book_text(file_path: str) -> str:
 	"""
 	Reads the content of a book from a text file.
@@ -10,18 +12,6 @@ def get_book_text(file_path: str) -> str:
 	"""
 	with open(file_path, 'r', encoding='utf-8') as file:
 		return file.read()
-
-def get_num_words(text: str) -> int:
-	"""
-	Counts the number of words in a given text.
-
-	Args:
-		text (str): The text to count words in.
-
-	Returns:
-		int: The number of words in the text.
-	"""
-	return len(text.split())
 
 def main() -> None:
 	"""
